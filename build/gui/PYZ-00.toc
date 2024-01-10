@@ -1,4 +1,4 @@
-('D:\\GIT\\GUI PYTHON\\build\\build\\gui\\PYZ-00.pyz',
+('D:\\GIT\\Python\\-GUI-PhanMemTrangThaiMayTinh\\build\\gui\\PYZ-00.pyz',
  [('__future__', 'C:\\Python\\Python39\\lib\\__future__.py', 'PYMODULE'),
   ('_compat_pickle',
    'C:\\Python\\Python39\\lib\\_compat_pickle.py',

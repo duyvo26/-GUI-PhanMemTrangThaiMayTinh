@@ -87,6 +87,14 @@ canvas = Canvas(
 )
 canvas.place(x=0, y=0)
 
+image_AnhNen = PhotoImage(
+    file=relative_to_assets("AnhNen.png"))
+AnhNen = canvas.create_image(
+    183.0,
+    109.0,
+    image=image_AnhNen
+)
+
 cpu_text = canvas.create_text(
     44.0,
     28.0,
