@@ -1,12 +1,15 @@
-from pathlib import Path
 import psutil
 import subprocess
 from tkinter import Tk, Canvas, PhotoImage, messagebox
 from time import time
 import os
+import locale
+
 
 def relative_to_assets(path):
     return  f'{os.getcwd()}/assets/frame0/{path}'
+
+locale.setlocale(locale.LC_TIME, 'vi_VN.UTF-8')
 
 # Store the application start time
 app_start_time = time()
@@ -27,14 +30,23 @@ def get_ram_usage():
         print(f"Error getting RAM usage: {e}")
         return None
 
+def format_uptime(seconds):
+    days, remainder = divmod(seconds, 86400)
+    hours, remainder = divmod(remainder, 3600)
+    minutes, seconds = divmod(remainder, 60)
+
+    return f"{int(days)} Day - {int(hours)}:{int(minutes)}:{int(seconds)}"
+
+
 def get_system_uptime():
     try:
-        uptime = time() - app_start_time
-        return round(uptime / 60, 2)  # Convert to minutes
+        uptime_seconds = time() - app_start_time
+        uptime_string = format_uptime(uptime_seconds)
+        return uptime_string
     except Exception as e:
         print(f"Error getting system uptime: {e}")
         return None
-
+    
 def shutdown():
     try:
         subprocess.run(["shutdown", "/s", "/t", "1"])
@@ -51,7 +63,8 @@ def on_close():
     # Display a confirmation dialog before closing the application
     if messagebox.askokcancel("Quit", "Do you really want to quit?"):
         window.destroy()
-
+        
+        
 def update_information():
     cpu_load = get_cpu_load()
     ram_usage = get_ram_usage()
@@ -64,10 +77,11 @@ def update_information():
         canvas.itemconfig(ram_text, text=f"Dung lượng RAM: {ram_usage}%")
 
     if system_uptime is not None:
-        canvas.itemconfig(uptime_text, text=f"Thời gian: {system_uptime} phút")
+        canvas.itemconfig(uptime_text, text=f"Thời gian: {system_uptime}")
 
     window.after(1000, update_information)  # Update every 1000 milliseconds (1 second)
-
+    
+    
 window = Tk()
 
 window.geometry("366x218+{}+{}".format(window.winfo_screenwidth() - 366, 0))
